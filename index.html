@@ -5,80 +5,241 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Northline Cargo - Fast & Reliable Delivery Across America</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f4f4f4;color:#111}
-header{background:#0f172a;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
-header a{color:#fff;text-decoration:none;font-weight:bold}
-.hero{background:#fff;padding:40px 20px;text-align:center}
-.hero h1{font-size:38px;line-height:1.2;margin:0}
-.hero h1 span{color:#facc15}
-.hero p{font-size:16px;color:#444}
-.btn{display:inline-block;padding:12px 20px;border-radius:8px;color:#fff;text-decoration:none;font-weight:bold;margin:6px}
-.section{max-width:900px;margin:20px auto;padding:0 20px}
-.card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);margin-bottom:16px}
-input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin:8px 0;box-sizing:border-box}
-footer{background:#0f172a;color:#fff;text-align:center;padding:20px;font-size:13px}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  color: #111;
+  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=1600');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+header {
+  background: #0f172a;
+  color: #fff;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+.hero {
+  background: transparent;
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+}
+.hero h1 {
+  font-size: 38px;
+  line-height: 1.2;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+.hero h1 span {
+  color: #facc15;
+}
+.hero p {
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.6);
+}
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 6px;
+  border: none;
+  cursor: pointer;
+}
+.section {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  margin-bottom: 16px;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+.track-result {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 14px;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: none;
+}
+.progress {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+.progress div {
+  height: 100%;
+  background: #22c55e;
+  width: 70%;
+}
+footer {
+  background: #0f172a;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+}
+.badge {
+  display: inline-block;
+  background: #fef3c7;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #111;
+}
 </style>
 </head>
 <body>
 
 <header>
-<div style="font-weight:bold;font-size:20px">🚚 Northline Cargo</div>
-<div><a href="mailto:northlinecargo@gmail.com">Email Us</a></div>
+  <div style="font-weight:bold;font-size:20px">🚚 Northline Cargo</div>
+  <div><a href="mailto:northlinecargo@gmail.com">Email Us</a></div>
 </header>
 
 <div class="hero">
-<h1>Fast & Reliable<br><span>Delivery Across America</span></h1>
-<p>From New York to California, Texas & beyond. We move your goods safely and on time.</p>
-<a class="btn" style="background:#2563eb" href="mailto:northlinecargo@gmail.com">📧 Email Us</a>
-<a class="btn" style="background:#25D366" href="https://wa.me/15551234567">💬 WhatsApp Us</a>
+  <span class="badge">⭐ Trusted in USA • 4.9 Rating</span>
+  <h1>Fast & Reliable<br><span>Delivery Across America</span></h1>
+  <p>From New York to California, Texas & beyond. We move your goods safely and on time.</p>
+  <a class="btn" style="background:#2563eb" href="mailto:northlinecargo@gmail.com">📧 Email Us</a>
+  <a class="btn" style="background:#25D366" href="https://wa.me/15551234567">💬 WhatsApp Us</a>
+  <p style="font-size:13px">📍 Houston, Texas, USA | 🕒 Mon - Sat: 8AM - 8PM</p>
 </div>
 
 <div class="section">
-<h2>Our Services</h2>
-<div class="card">
-<h3>🚚 Nationwide Delivery</h3>
-<p>Fast delivery to all 50 states in the USA.</p>
-</div>
-<div class="card">
-<h3>📦 Package Tracking</h3>
-<p>Track your package in real-time with your tracking number.</p>
-</div>
-<div class="card">
-<h3>🏠 Door to Door</h3>
-<p>We pick up and deliver directly to your door.</p>
-</div>
-</div>
-
-<div class="section">
-<div class="card">
-<h3>📍 Track Your Package</h3>
-<p>Enter your tracking number below.</p>
-<input type="text" placeholder="Enter tracking number e.g. NL123456">
-<a class="btn" style="background:#0f172a" href="#">Track Package</a>
-</div>
+  <h2 style="color:white;text-align:center;text-shadow:0 1px 5px rgba(0,0,0,0.6)">Our Services</h2>
+  <div class="card">
+    <h3>🚚 Nationwide Delivery</h3>
+    <p>Fast delivery to all 50 states in the USA. 2-5 working days.</p>
+    <p><b>From $9.99</b></p>
+  </div>
+  <div class="card">
+    <h3>📦 Package Tracking</h3>
+    <p>Track your package in real-time with your tracking number.</p>
+  </div>
+  <div class="card">
+    <h3>🏠 Door to Door</h3>
+    <p>We pick up and deliver directly to your door.</p>
+  </div>
+  <div class="card">
+    <h3>⚡ Express Delivery</h3>
+    <p>Same-day in Houston & next-day in Texas. Urgent delivery available.</p>
+    <p><b>From $19.99</b></p>
+  </div>
 </div>
 
 <div class="section">
-<div class="card">
-<h3>Why Choose Northline?</h3>
-<p>We deliver fast, safe and affordable across the USA.</p>
-<p style="font-size:13px;color:#666">Serving New York - California - Texas - Florida - Illinois - Georgia - Ohio - Arizona - North Carolina - Michigan - New Jersey - Virginia</p>
-</div>
+  <div class="card">
+    <h3>📍 Track Your Package</h3>
+    <p>Enter your tracking number below. Example: NL123456</p>
+    <input type="text" id="trackInput" placeholder="Enter tracking number e.g. NL123456">
+    <button class="btn" style="background:#0f172a;width:100%" onclick="trackPackage()">Track Package</button>
+    <div id="trackResult" class="track-result">
+      <p><b>✅ Package Found!</b></p>
+      <p id="trackText">Your package is on the way.</p>
+      <div class="progress"><div></div></div>
+      <p style="font-size:13px">📍 Current Location: Dallas, Texas<br>🚚 Estimated Delivery: 2 Days<br>Status: In Transit</p>
+    </div>
+    <p style="font-size:12px;color:#666">No tracking number? Email us: northlinecargo@gmail.com</p>
+  </div>
 </div>
 
 <div class="section">
-<div class="card" style="text-align:center">
-<img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300" style="width:120px;height:120px;border-radius:50%;object-fit:cover" alt="Customer Service">
-<h3 style="margin-top:12px">Northline Assistant</h3>
-<p style="font-size:13px;color:#555">Ask about prices, delivery times and tracking. We reply fast.</p>
-<a class="btn" style="background:#2563eb" href="mailto:northlinecargo@gmail.com">Ask Assistant</a>
+  <div class="card">
+    <h3>Why Choose Northline?</h3>
+    <p>✅ Fast, Safe & Affordable across USA<br>✅ Insurance on every package<br>✅ Real human support</p>
+    <p style="font-size:13px;color:#666">Serving: New York - California - Texas - Florida - Illinois - Georgia - Ohio - Arizona - North Carolina - Michigan - New Jersey - Virginia - Washington - Colorado - Tennessee</p>
+  </div>
 </div>
+
+<div class="section">
+  <div class="card" style="text-align:center">
+    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300" style="width:120px;height:120px;border-radius:50%;object-fit:cover" alt="Customer Service">
+    <h3 style="margin-top:12px">Northline Assistant</h3>
+    <p style="font-size:13px;color:#555">Ask about prices, delivery times and tracking. We reply fast.</p>
+    <input type="text" id="assistantInput" placeholder="Ask e.g. How much to send to California?">
+    <button class="btn" style="background:#2563eb" onclick="askAssistant()">Ask Assistant</button>
+    <p id="assistantReply" style="font-size:14px;background:#eff6ff;padding:12px;border-radius:8px;display:none"></p>
+    <br>
+    <a class="btn" style="background:#25D366" href="https://wa.me/15551234567">💬 Chat on WhatsApp</a>
+    <a class="btn" style="background:#2563eb" href="mailto:northlinecargo@gmail.com">📧 Email Assistant</a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card" style="text-align:center">
+    <h3>Get A Free Quote</h3>
+    <p>Tell us where you want to send to.</p>
+    <a class="btn" style="background:#f59e0b" href="mailto:northlinecargo@gmail.com?subject=Free Quote">Get Free Quote</a>
+  </div>
 </div>
 
 <footer>
-<p>© 2025 Northline Cargo - Houston, Texas, USA</p>
-<p style="font-size:12px;color:#aaa">Fast & Reliable Delivery Across America</p>
+  <p>© 2025 Northline Cargo - Houston, Texas, USA</p>
+  <p style="font-size:12px;color:#aaa">Fast & Reliable Delivery Across America | northlinecargo@gmail.com</p>
 </footer>
+
+<script>
+function trackPackage() {
+  var v = document.getElementById('trackInput').value.trim();
+  var r = document.getElementById('trackResult');
+  var t = document.getElementById('trackText');
+  if (v == "") {
+    alert("Please enter tracking number");
+    return;
+  }
+  r.style.display = 'block';
+  t.innerHTML = "Tracking <b>" + v.toUpperCase() + "</b> - Your package is on the way to you.";
+  r.scrollIntoView({behavior:'smooth'});
+}
+function askAssistant() {
+  var q = document.getElementById('assistantInput').value.toLowerCase();
+  var a = document.getElementById('assistantReply');
+  a.style.display = 'block';
+  if (q.includes("price") || q.includes("cost") || q.includes("much")) {
+    a.innerHTML = "💰 Our delivery starts from $9.99 in USA. Express from $19.99. Email us for exact quote for your state.";
+  } else if (q.includes("california") || q.includes("new york") || q.includes("texas") || q.includes("florida")) {
+    a.innerHTML = "📍 Yes, we deliver to that state in 2-5 working days. Track with your tracking number above.";
+  } else if (q.includes("track")) {
+    a.innerHTML = "📦 Enter your tracking number above (e.g. NL123456) and click Track Package.";
+  } else if (q.includes("time") || q.includes("long") || q.includes("days")) {
+    a.innerHTML = "⏱️ Normal delivery: 2-5 working days in USA. Express: Same-day in Houston, next-day in Texas.";
+  } else {
+    a.innerHTML = "👋 Hi! We deliver across all 50 states in USA from $9.99. Ask me about price, delivery time or tracking, or email northlinecargo@gmail.com";
+  }
+}
+</script>
 
 </body>
 </html>
