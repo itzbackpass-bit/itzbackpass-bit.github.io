@@ -240,6 +240,20 @@ function askAssistant() {
   }
 }
 </script>
-
+<div id="trackBox" style="display:none;max-width:500px;margin:20px auto;background:#fff;color:#111;padding:20px;border-radius:12px;text-align:left"></div>
+<script>
+// Read tracking link
+var params = new URLSearchParams(window.location.search);
+var t = params.get('t');
+if(t){
+  try{
+    var data = JSON.parse(atob(t));
+    var box = document.getElementById('trackBox');
+    box.style.display='block';
+    box.innerHTML = "<h2>📦 Tracking: "+data.n+"</h2><p><b>Customer:</b> "+data.name+"</p><p><b>From:</b> "+data.from+"</p><p><b>To:</b> "+data.to+"</p><p><b>Status:</b> "+data.status+"</p><p><b>Current Location:</b> "+data.loc+"</p><p style='color:green'><b>✅ Your package is on the way!</b></p>";
+    window.scrollTo(0,0);
+  }catch(e){}
+}
+</script>
 </body>
 </html>
