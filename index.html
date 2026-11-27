@@ -135,5 +135,35 @@ function add(){
 }
 function del(i){orders.splice(i,1);localStorage.setItem('nl_orders',JSON.stringify(orders));render()}
 </script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB5WNDPxhjoEYQsoDHoSA3oUxNFvH6-qDk",
+    authDomain: "northline-26dfa.firebaseapp.com",
+    databaseURL: "https://northline-26dfa-default-rtdb.firebaseio.com",
+    projectId: "northline-26dfa",
+    storageBucket: "northline-26dfa.firebasestorage.app",
+    messagingSenderId: "569967073894",
+    appId: "1:569967073894:web:040b34ee22bdcc63426ba7",
+    measurementId: "G-CKQLCT0BF9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // TEST: write small data to check if e connect
+  set(ref(db, 'test/'), {
+    message: "Northline don connect!",
+    time: Date.now()
+  });
+
+  // TEST: read am back
+  onValue(ref(db, 'test/'), (snapshot) => {
+    console.log("From Firebase:", snapshot.val());
+    alert("Firebase Connected! " + JSON.stringify(snapshot.val()));
+  });
+</script>
 </body>
 </html>
