@@ -154,16 +154,6 @@ function del(i){orders.splice(i,1);localStorage.setItem('nl_orders',JSON.stringi
   const db = getDatabase(app);
 
   // TEST: write small data to check if e connect
-  set(ref(db, 'test/'), {
-    message: "Northline don connect!",
-    time: Date.now()
-  });
-
-  // TEST: read am back
-  onValue(ref(db, 'test/'), (snapshot) => {
-    console.log("From Firebase:", snapshot.val());
-    alert("Firebase Connected! " + JSON.stringify(snapshot.val()));
-  });
 </script>
 </body>
 </html>
