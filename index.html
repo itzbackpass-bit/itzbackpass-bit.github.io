@@ -1,107 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northline Delivery Agency | Fast & Secure Delivery in New York</title>
+<title>Northline Admin - Create Tracking</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif}
-body{background:#f6f7f9;color:#111}
-header{background:#0A1931;color:#fff;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-header b{font-size:22px;letter-spacing:1px} header b span{color:#FFC107}
-header a{color:#fff;text-decoration:none;margin-left:15px;font-size:14px}
-.btn{background:#FFC107;color:#111;padding:10px 18px;border-radius:8px;font-weight:bold;text-decoration:none;display:inline-block;border:none;cursor:pointer}
-.hero{background:linear-gradient(90deg,#0A1931,#143a7a);color:#fff;padding:60px 20px;text-align:center}
-.hero h1{font-size:38px;line-height:1.2}.hero h1 span{color:#FFC107}
-.hero p{margin:15px auto;max-width:600px;opacity:.9}
-.hero input{padding:13px;width:280px;max-width:90%;border-radius:8px;border:none;margin-top:10px}
-.card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
-section{max-width:1050px;margin:30px auto;padding:0 20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-h2{margin-bottom:12px}.price{font-size:32px;font-weight:bold;margin:10px 0}
-input,select,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px}
-footer{background:#0A1931;color:#fff;text-align:center;padding:25px}
-.badge{background:#e8f5e9;color:#1b7a2e;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+body{font-family:Arial;background:#0A1931;padding:20px;margin:0}
+.box{background:#fff;padding:22px;border-radius:14px;max-width:480px;margin:0 auto}
+h2{color:#0A1931;text-align:center}h2 span{color:#FFC107}
+input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+.btn{background:#FFC107;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer}
+#panel{display:none}
+.order{background:#f6f7f9;padding:12px;border-radius:8px;margin-top:10px}
+#petFields{display:none;background:#fff8e1;padding:12px;border-radius:10px;border:1px dashed #FFC107}
+#goodsFields{background:#f0f7ff;padding:12px;border-radius:10px}
 </style>
 </head>
 <body>
-
-<header>
-<b>NORTHLINE<span> ✦</span></b>
-<div><a href="#services">Services</a><a href="#pricing">Pricing</a><a href="#track">Track</a><a href="#quote">Get Quote</a></div>
-</header>
-
-<div class="hero">
-<span class="badge" style="background:#FFC107;color:#111">★ RATED 4.9 | NEW YORK'S TRUSTED DELIVERY</span>
-<h1>Fast, Secure Delivery<br><span>Across New York & USA</span></h1>
-<p>Same-Day in NYC. Next-Day across New York State. Interstate delivery to all 50 states. Real-time updates, insured packages, professional drivers.</p>
-<br><a class="btn" href="#quote">Get Instant Quote →</a>
-<a class="btn" style="background:#fff;margin-left:10px" href="#track">Track Package</a>
-<p style="margin-top:20px;font-size:13px">📍 Serving: Manhattan • Brooklyn • Queens • Bronx • Staten Island • Long Island • New Jersey</p>
+<div class="box">
+<div id="login">
+<h2>NORTHLINE<span> ✦</span> ADMIN</h2>
+<p style="text-align:center;color:#666">Nationwide • All Branches</p>
+<input id="u" value="admin" placeholder="Username">
+<input id="p" type="password" value="1234" placeholder="Password">
+<button class="btn" onclick="login()">Login</button>
+<p style="font-size:12px;color:#888;text-align:center">Username: admin | Password: 1234</p>
 </div>
 
-<section id="services"><h2>Our Services</h2><div class="grid">
-<div class="card"><h3>⚡ Same-Day NYC</h3><p>Pickup within 60 mins. Delivery in 2-4 hours across all 5 boroughs.</p><b>From $18</b></div>
-<div class="card"><h3>📦 Next-Day NY State</h3><p>Albany, Buffalo, Rochester, Syracuse & more. Guaranteed next day.</p><b>From $32</b></div>
-<div class="card"><h3>🇺🇸 Interstate Delivery</h3><p>NY to CA, TX, FL & all states. 2-5 days with full insurance.</p><b>From $49</b></div>
-<div class="card"><h3>🏢 Business & E-commerce</h3><p>Daily pickups for stores, restaurants & online sellers. Dedicated account manager.</p><b>Custom Pricing</b></div>
-</div></section>
+<div id="panel">
+<h3>Welcome Admin 👋</h3>
+<p><b>Create New Order + Tracking Number</b></p>
+<button class="btn" onclick="genNewTrack()">Generate Tracking Number</button>
+<p id="newTrack" style="text-align:center;font-weight:bold;font-size:18px;margin:10px 0">Tracking: NL-______ (Press Generate)</p>
 
-<section id="track"><div class="card">
-<h2>📍 Track Your Package</h2>
-<p>Enter your tracking number. We use real carrier tracking for full transparency.</p>
-<input id="trackNum" placeholder="e.g. 9400 1000 0000 0000 0000 00">
-<select id="carrier"><option value="usps">USPS</option><option value="ups">UPS</option><option value="fedex">FedEx</option><option value="dhl">DHL</option></select>
-<button class="btn" onclick="track()">Track on Official Carrier Site →</button>
-<p style="font-size:12px;margin-top:10px;color:#666">You will be redirected to the official USPS / UPS / FedEx website for verified live status.</p>
-</div></section>
+<select id="branch">
+<option>New York Branch</option>
+<option>New Jersey Branch</option>
+<option>California Branch</option>
+<option>Texas Branch</option>
+<option>Florida Branch</option>
+<option>Illinois Branch</option>
+<option>Georgia Branch</option>
+<option>Other State</option>
+</select>
+<input id="cust" placeholder="Customer Name">
+<input id="phone" placeholder="Customer Phone">
+<input id="from" placeholder="Pickup Address">
+<input id="to" placeholder="Delivery Address">
 
-<section id="pricing"><h2>Transparent Pricing</h2><div class="grid">
-<div class="card"><h3>Local - NYC</h3><div class="price">$18+</div><p>Up to 10 lbs • Same-Day<br>Live SMS Updates<br>Proof of Delivery Photo</p><br><a class="btn" href="#quote">Book Local</a></div>
-<div class="card" style="border:2px solid #FFC107"><h3>⭐ Most Popular - NY State</h3><div class="price">$32+</div><p>Up to 25 lbs • Next-Day<br>Insurance up to $500<br>Priority Support</p><br><a class="btn" href="#quote">Book Statewide</a></div>
-<div class="card"><h3>Interstate - USA</h3><div class="price">$49+</div><p>Up to 50 lbs • 2-5 Days<br>Insurance up to $1,000<br>Door-to-Door</p><br><a class="btn" href="#quote">Book Interstate</a></div>
-</div></section>
+<label><b>📦 Package Type - Admin Select:</b></label>
+<select id="pkgType" onchange="togglePkg()">
+<option value="Goods">📦 Goods / Parcel</option>
+<option value="Pet">🐶 Pet Delivery</option>
+</select>
 
-<section id="quote"><div class="card">
-<h2>Get Instant Quote & Book Delivery</h2>
-<form onsubmit="sendQuote(event)">
-<input id="qname" placeholder="Your Full Name" required>
-<input id="qphone" placeholder="Phone / WhatsApp" required>
-<input id="qpick" placeholder="Pickup Address - e.g. Brooklyn, NY" required>
-<input id="qdrop" placeholder="Delivery Address" required>
-<select id="qsize"><option>Small Package (under 10 lbs)</option><option>Medium (10-25 lbs)</option><option>Large (25-50 lbs)</option><option>Business / Bulk</option></select>
-<textarea id="qnote" placeholder="What are you sending? Any special instructions?"></textarea>
-<button class="btn" style="width:100%">Request Quote on WhatsApp →</button>
-</form>
-<p style="font-size:13px;text-align:center;margin-top:10px">Or call us: <b>(212) 555-0148</b> | Email: hello@northline-ny.com</p>
-</div></section>
+<div id="goodsFields">
+<p style="font-weight:bold">📦 Goods Details:</p>
+<input id="goodsType" placeholder="Goods Type - e.g. Electronics, Clothes, Food, Documents">
+<input id="goodsWeight" placeholder="Goods Weight - e.g. 5kg">
+<input id="goodsQty" placeholder="Quantity - e.g. 2 boxes">
+<textarea id="goodsNote" placeholder="Goods Description / Fragile / Other Note..."></textarea>
+</div>
 
-<section><div class="grid">
-<div class="card"><h3>Why Northline?</h3><p>✅ $1,000 Insurance Included<br>✅ Photo Proof on Every Delivery<br>✅ Live Driver Updates<br>✅ No Hidden Fees</p></div>
-<div class="card"><h3>⭐ Customer Reviews</h3><p>"Northline delivered my documents from Manhattan to Queens in 2 hours. Very professional!" - Maria R., Brooklyn<br><br>"Best delivery agency in NY. I use them for my online store every day." - James K., Manhattan</p></div>
-<div class="card"><h3>📍 Our Office</h3><p>Northline Delivery Agency<br>350 5th Avenue, Suite 210<br>New York, NY 10118<br>Mon-Sat: 8am - 8pm<br>Sun: 10am - 4pm</p></div>
-</div></section>
+<div id="petFields">
+<p style="font-weight:bold;color:#e65100">🐾 Pet Details - Admin Fill:</p>
+<input id="petName" placeholder="Pet Name - e.g. Max">
+<input id="petBreed" placeholder="Breed - e.g. German Shepherd / Persian Cat">
+<input id="petWeight" placeholder="Pet Weight - e.g. 12kg">
+<select id="petSex"><option>Male</option><option>Female</option></select>
+<input id="petAge" placeholder="Pet Age - e.g. 2 years">
+<input id="petColor" placeholder="Color / Markings - e.g. Brown & Black">
+<input id="petVac" placeholder="Vaccination Status - e.g. Vaccinated / Not Vaccinated">
+<textarea id="petNote" placeholder="Special Care / Food / Medicine / Other..."></textarea>
+</div>
 
-<footer><b>NORTHLINE DELIVERY AGENCY</b><br>New York • USA | Licensed & Insured<br><small>© 2026 Northline. All rights reserved.</small></footer>
+<select id="st">
+<option>Picked Up</option>
+<option>In Transit</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+<button class="btn" onclick="add()">Save Order with Tracking</button>
+
+<h3 style="margin-top:20px">All Orders</h3>
+<div id="list"></div>
+<br>
+<button class="btn" onclick="location.reload()">Logout</button>
+<br><br>
+<a href="owner.html">Go to Owner Dashboard →</a>
+</div>
+</div>
 
 <script>
-function track(){
-  var n=document.getElementById('trackNum').value.trim();
-  var c=document.getElementById('carrier').value;
-  if(!n){alert('Please enter tracking number');return;}
-  var url='';
-  if(c=='usps') url='https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1='+encodeURIComponent(n);
-  if(c=='ups') url='https://www.ups.com/track?tracknum='+encodeURIComponent(n);
-  if(c=='fedex') url='https://www.fedex.com/fedextrack/?trknbr='+encodeURIComponent(n);
-  if(c=='dhl') url='https://www.dhl.com/us-en/home/tracking.html?tracking-id='+encodeURIComponent(n);
-  window.open(url,'_blank');
+let curTrack='';
+function genNewTrack(){
+  curTrack='NL-'+Math.floor(100000+Math.random()*900000);
+  document.getElementById('newTrack').innerText='Tracking: '+curTrack;
 }
-function sendQuote(e){
-  e.preventDefault();
-  var msg="Hello Northline! I want a delivery quote.%0AName: "+document.getElementById('qname').value+"%0APhone: "+document.getElementById('qphone').value+"%0APickup: "+document.getElementById('qpick').value+"%0ADelivery: "+document.getElementById('qdrop').value+"%0ASize: "+document.getElementById('qsize').value+"%0ANote: "+document.getElementById('qnote').value;
-  window.open('https://wa.me/12125550148?text='+msg,'_blank');
-  alert('Thank you! Your quote request is ready. Press Send on WhatsApp.');
+function togglePkg(){
+  let t=document.getElementById('pkgType').value;
+  document.getElementById('petFields').style.display = t=='Pet' ? 'block' : 'none';
+  document.getElementById('goodsFields').style.display = t=='Goods' ? 'block' : 'none';
 }
+function login(){
+  var u=document.getElementById('u').value.trim();
+  var p=document.getElementById('p').value.trim();
+  if(u=='admin' && p=='1234'){
+    document.getElementById('login').style.display='none';
+    document.getElementById('panel').style.display='block';
+    render();
+  } else { alert('Use admin / 1234'); }
+}
+let orders=JSON.parse(localStorage.getItem('nl_orders')||'[]');
+function render(){
+  document.getElementById('list').innerHTML=orders.map((o,i)=>`<div class="order"><b>${o.track||'No Track'} - ${o.cust}</b> (${o.type||''})<br>${o.from} → ${o.to}<br><small>${o.detail||''}</small><br><span style="background:#e8f5e9;padding:3px 8px;border-radius:12px;font-size:12px">${o.st} | ${o.branch||''}</span> <button onclick="del(${i})" style="float:right">Delete</button></div>`).join('')||'No orders yet.';
+}
+function add(){
+  if(!curTrack){alert('Press Generate Tracking Number first!');return}
+  let type=document.getElementById('pkgType').value;
+  let detail='';
+  if(type=='Pet'){
+    detail='🐶 Pet Name: '+document.getElementById('petName').value+' | Breed: '+document.getElementById('petBreed').value+' | Weight: '+document.getElementById('petWeight').value+' | Sex: '+document.getElementById('petSex').value+' | Age: '+document.getElementById('petAge').value+' | Color: '+document.getElementById('petColor').value+' | Vaccination: '+document.getElementById('petVac').value+' | Note: '+document.getElementById('petNote').value;
+  } else {
+    detail='📦 Goods: '+document.getElementById('goodsType').value+' | Weight: '+document.getElementById('goodsWeight').value+' | Qty: '+document.getElementById('goodsQty').value+' | Note: '+document.getElementById('goodsNote').value;
+  }
+  let o={track:curTrack,cust:document.getElementById('cust').value,from:document.getElementById('from').value,to:document.getElementById('to').value,st:document.getElementById('st').value,type:type,detail:detail,branch:document.getElementById('branch').value};
+  if(!o.cust){alert('Enter customer name');return}
+  orders.unshift(o);
+  localStorage.setItem('nl_orders',JSON.stringify(orders));
+  render();
+  alert('Saved! Tracking: '+curTrack+' - Send am to customer');
+  curTrack='';
+  document.getElementById('newTrack').innerText='Tracking: NL-______ (Press Generate)';
+}
+function del(i){orders.splice(i,1);localStorage.setItem('nl_orders',JSON.stringify(orders));render()}
 </script>
 </body>
 </html>
