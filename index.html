@@ -1,184 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northline Admin - Create Tracking</title>
+<title>Northline - Track Your Package</title>
 <style>
-body{font-family:Arial;background:#0A1931;padding:20px;margin:0}
-.box{background:#fff;padding:22px;border-radius:14px;max-width:480px;margin:0 auto}
-h2{color:#0A1931;text-align:center}h2 span{color:#FFC107}
-input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
-.btn{background:#FFC107;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer}
-#panel{display:none}
-.order{background:#f6f7f9;padding:12px;border-radius:8px;margin-top:10px}
-#petFields{display:none;background:#fff8e1;padding:12px;border-radius:10px;border:1px dashed #FFC107}
-#goodsFields{background:#f0f7ff;padding:12px;border-radius:10px}
+* { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+body { background:#f4f6f8; color:#111; }
+.header { background:#0a1a2f; color:white; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; }
+.logo { font-size:22px; font-weight:800; letter-spacing:1px; }
+.logo span { color:#ffcc00; }
+.header a { color:white; text-decoration:none; font-size:14px; }
+.hero { background:#0a1a2f; color:white; text-align:center; padding:50px 20px 60px; }
+.hero h1 { font-size:32px; margin-bottom:10px; }
+.hero p { color:#cbd5e1; font-size:16px; }
+.track-box { background:white; max-width:520px; margin:-30px auto 20px; padding:22px; border-radius:14px; box-shadow:0 10px 25px rgba(0,0,0,0.15); text-align:center; }
+.track-box h2 { font-size:20px; margin-bottom:12px; }
+.track-box input { width:100%; padding:14px; border:2px solid #ddd; border-radius:10px; font-size:16px; margin-bottom:12px; text-transform:uppercase; }
+.track-box button { width:100%; padding:14px; background:#ffcc00; border:none; border-radius:10px; font-size:16px; font-weight:800; cursor:pointer; }
+.track-box small { display:block; margin-top:10px; color:#666; }
+.features { max-width:900px; margin:20px auto; padding:0 20px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+.card { background:white; padding:18px; border-radius:12px; text-align:center; }
+.card b { display:block; margin-bottom:6px; }
+.card p { color:#666; font-size:14px; }
+.footer { text-align:center; padding:20px; color:#888; font-size:13px; }
+@media(max-width:600px){ .features{grid-template-columns:1fr;} .hero h1{font-size:26px;} }
 </style>
 </head>
 <body>
-<div class="box">
-<div id="login">
-<h2>NORTHLINE<span> ✦</span> ADMIN</h2>
-<p style="text-align:center;color:#666">Nationwide • All Branches</p>
-<input id="u" value="admin" placeholder="Username">
-<input id="p" type="password" value="1234" placeholder="Password">
-<button class="btn" onclick="login()">Access Dashboard</button>
-<p style="font-size:12px;color:#888;text-align:center">Username: admin | Password: 1234</p>
+
+<div class="header">
+  <div class="logo">NORTH<span>LINE</span></div>
+  <a href="track.html">Track</a>
 </div>
 
-<div id="panel">
-<h3>Welcome Admin</h3>
-<p><b>Create New Order + Tracking Number</b></p>
-<button class="btn" onclick="genNewTrack()">Generate Tracking Number</button>
-<p id="newTrack" style="text-align:center;font-weight:bold;font-size:18px;margin:10px 0">Tracking: NL-______ (Press Generate)</p>
-
-<select id="branch">
-<option>New York Branch</option>
-<option>New Jersey Branch</option>
-<option>California Branch</option>
-<option>Texas Branch</option>
-<option>Florida Branch</option>
-<option>Illinois Branch</option>
-<option>Georgia Branch</option>
-<option>Other State</option>
-</select>
-<input id="cust" placeholder="Customer Name">
-<input id="phone" placeholder="Customer Phone">
-<input id="from" placeholder="Pickup Address">
-<input id="to" placeholder="Delivery Address">
-
-<label><b>Package Type - Admin Select:</b></label>
-<select id="pkgType" onchange="togglePkg()">
-<option value="Goods">Goods / Parcel</option>
-<option value="Pet">Pet Delivery</option>
-</select>
-
-<div id="goodsFields">
-<p style="font-weight:bold">Goods Details:</p>
-<input id="goodsType" placeholder="Goods Type - e.g. Electronics, Clothes, Food, Documents">
-<input id="goodsWeight" placeholder="Goods Weight - e.g. 5kg">
-<input id="goodsQty" placeholder="Quantity - e.g. 2 boxes">
-<textarea id="goodsNote" placeholder="Goods Description / Fragile / Other Note..."></textarea>
+<div class="hero">
+  <h1>Fast, Reliable Delivery</h1>
+  <p>Track your package in real-time with Northline</p>
 </div>
 
-<div id="petFields">
-<p style="font-weight:bold;color:#e65100">Pet Details - Admin Fill:</p>
-<input id="petName" placeholder="Pet Name - e.g. Max">
-<input id="petBreed" placeholder="Breed - e.g. German Shepherd / Persian Cat">
-<input id="petWeight" placeholder="Pet Weight - e.g. 12kg">
-<select id="petSex"><option>Male</option><option>Female</option></select>
-<input id="petAge" placeholder="Pet Age - e.g. 2 years">
-<input id="petColor" placeholder="Color / Markings - e.g. Brown & Black">
-<input id="petVac" placeholder="Vaccination Status - e.g. Vaccinated / Not Vaccinated">
-<textarea id="petNote" placeholder="Special Care / Food / Medicine / Other..."></textarea>
+<div class="track-box">
+  <h2>Track Your Package</h2>
+  <input id="trackNum" placeholder="Enter Tracking Number e.g. NL123456" />
+  <button onclick="track()">TRACK NOW →</button>
+  <small>Example: Try NL123456</small>
 </div>
 
-<select id="st">
-<option>Picked Up</option>
-<option>In Transit</option>
-<option>Out for Delivery</option>
-<option>Delivered</option>
-</select>
-<button class="btn" onclick="add()">Save Order with Tracking</button>
-
-<h3 style="margin-top:20px">All Orders</h3>
-<div id="list"></div>
-<br>
-<button class="btn" onclick="location.reload()">Logout</button>
-<br><br>
-<a href="owner.html">Go to Owner Dashboard</a>
-</div>
+<div class="features">
+  <div class="card"><b>🚚 Fast Delivery</b><p>Same-day and next-day delivery in your area</p></div>
+  <div class="card"><b>📍 Live Tracking</b><p>See exactly where your package is</p></div>
+  <div class="card"><b>🔒 Safe & Secure</b><p>Your package handled with care</p></div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, set, get, child, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+<div class="footer">© 2026 Northline Delivery. All rights reserved.</div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB5WNDPxhjoEYQsoDHoSA3oUxNFvH6-qDk",
-  authDomain: "northline-26dfa.firebaseapp.com",
-  databaseURL: "https://northline-26dfa-default-rtdb.firebaseio.com",
-  projectId: "northline-26dfa",
-  storageBucket: "northline-26dfa.firebasestorage.app",
-  messagingSenderId: "569967073894",
-  appId: "1:569967073894:web:040b34ee22bdcc63426ba7",
-  measurementId: "G-CKQLCT0BF9"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-let curTrack = '';
-let orders = [];
-
-window.genNewTrack = function() {
-  curTrack = 'NL-' + Math.floor(100000 + Math.random() * 900000);
-  document.getElementById('newTrack').innerText = 'Tracking: ' + curTrack;
+<script>
+function track(){
+  var num = document.getElementById('trackNum').value.trim();
+  if(!num){ alert('Please enter tracking number'); return; }
+  window.location.href = 'track.html?track=' + encodeURIComponent(num);
 }
-
-window.togglePkg = function() {
-  let t = document.getElementById('pkgType').value;
-  document.getElementById('petFields').style.display = t == 'Pet' ? 'block' : 'none';
-  document.getElementById('goodsFields').style.display = t == 'Goods' ? 'block' : 'none';
-}
-
-window.login = async function() {
-  const u = document.getElementById('u').value.trim();
-  const p = document.getElementById('p').value.trim();
-  try {
-    const snap = await get(child(ref(db), `admins/${u}`));
-    if (snap.exists() && snap.val().password === p) {
-      showPanel();
-      return;
-    }
-  } catch(e) {}
-  if (u == 'admin' && p == '1234') {
-    await set(ref(db, 'admins/admin'), { username: "admin", password: "1234" });
-    showPanel();
-  } else {
-    alert('Wrong username or password');
-  }
-}
-
-function showPanel() {
-  document.getElementById('login').style.display = 'none';
-  document.getElementById('panel').style.display = 'block';
-  loadOrders();
-}
-
-function loadOrders() {
-  onValue(ref(db, 'orders'), (snapshot) => {
-    const data = snapshot.val() || {};
-    orders = Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse();
-    render();
-  });
-}
-
-function render() {
-  document.getElementById('list').innerHTML = orders.map((o) => `<div class="order"><b>${o.track || 'No Track'} - ${o.cust}</b> (${o.type || ''})<br>${o.from} → ${o.to}<br><small>${o.detail || ''}</small><br><span style="background:#e8f5e9;padding:3px 8px;border-radius:12px;font-size:12px">${o.st} | ${o.branch || ''}</span> <button onclick="delOrder('${o.id}')" style="float:right">Delete</button></div>`).join('') || 'No orders yet.';
-}
-
-window.add = async function() {
-  if (!curTrack) { alert('Press Generate Tracking Number first!'); return; }
-  let type = document.getElementById('pkgType').value;
-  let detail = '';
-  if (type == 'Pet') {
-    detail = 'Pet Name: ' + document.getElementById('petName').value + ' | Breed: ' + document.getElementById('petBreed').value + ' | Weight: ' + document.getElementById('petWeight').value + ' | Sex: ' + document.getElementById('petSex').value + ' | Age: ' + document.getElementById('petAge').value + ' | Color: ' + document.getElementById('petColor').value + ' | Vaccination: ' + document.getElementById('petVac').value + ' | Note: ' + document.getElementById('petNote').value;
-  } else {
-    detail = 'Goods: ' + document.getElementById('goodsType').value + ' | Weight: ' + document.getElementById('goodsWeight').value + ' | Qty: ' + document.getElementById('goodsQty').value + ' | Note: ' + document.getElementById('goodsNote').value;
-  }
-  let o = { track: curTrack, cust: document.getElementById('cust').value, phone: document.getElementById('phone').value, from: document.getElementById('from').value, to: document.getElementById('to').value, st: document.getElementById('st').value, type: type, detail: detail, branch: document.getElementById('branch').value, createdAt: Date.now() };
-  if (!o.cust) { alert('Enter customer name'); return; }
-  await push(ref(db, 'orders'), o);
-  alert('Saved to Firebase! Tracking: ' + curTrack);
-  curTrack = '';
-  document.getElementById('newTrack').innerText = 'Tracking: NL-______ (Press Generate)';
-}
-
-window.delOrder = async function(id) {
-  await set(ref(db, 'orders/' + id), null);
-}
+document.getElementById('trackNum').addEventListener('keypress', function(e){
+  if(e.key === 'Enter') track();
+});
 </script>
 </body>
 </html>
