@@ -23,12 +23,12 @@ input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd
 <p style="text-align:center;color:#666">Nationwide • All Branches</p>
 <input id="u" value="admin" placeholder="Username">
 <input id="p" type="password" value="1234" placeholder="Password">
-<button class="btn" onclick="login()">Login</button>
+<button class="btn" onclick="login()">Access Dashboard</button>
 <p style="font-size:12px;color:#888;text-align:center">Username: admin | Password: 1234</p>
 </div>
 
 <div id="panel">
-<h3>Welcome Admin 👋</h3>
+<h3>Welcome Admin</h3>
 <p><b>Create New Order + Tracking Number</b></p>
 <button class="btn" onclick="genNewTrack()">Generate Tracking Number</button>
 <p id="newTrack" style="text-align:center;font-weight:bold;font-size:18px;margin:10px 0">Tracking: NL-______ (Press Generate)</p>
@@ -48,14 +48,14 @@ input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd
 <input id="from" placeholder="Pickup Address">
 <input id="to" placeholder="Delivery Address">
 
-<label><b>📦 Package Type - Admin Select:</b></label>
+<label><b>Package Type - Admin Select:</b></label>
 <select id="pkgType" onchange="togglePkg()">
-<option value="Goods">📦 Goods / Parcel</option>
-<option value="Pet">🐶 Pet Delivery</option>
+<option value="Goods">Goods / Parcel</option>
+<option value="Pet">Pet Delivery</option>
 </select>
 
 <div id="goodsFields">
-<p style="font-weight:bold">📦 Goods Details:</p>
+<p style="font-weight:bold">Goods Details:</p>
 <input id="goodsType" placeholder="Goods Type - e.g. Electronics, Clothes, Food, Documents">
 <input id="goodsWeight" placeholder="Goods Weight - e.g. 5kg">
 <input id="goodsQty" placeholder="Quantity - e.g. 2 boxes">
@@ -63,7 +63,7 @@ input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd
 </div>
 
 <div id="petFields">
-<p style="font-weight:bold;color:#e65100">🐾 Pet Details - Admin Fill:</p>
+<p style="font-weight:bold;color:#e65100">Pet Details - Admin Fill:</p>
 <input id="petName" placeholder="Pet Name - e.g. Max">
 <input id="petBreed" placeholder="Breed - e.g. German Shepherd / Persian Cat">
 <input id="petWeight" placeholder="Pet Weight - e.g. 12kg">
@@ -87,73 +87,98 @@ input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd
 <br>
 <button class="btn" onclick="location.reload()">Logout</button>
 <br><br>
-<a href="owner.html">Go to Owner Dashboard →</a>
+<a href="owner.html">Go to Owner Dashboard</a>
 </div>
 </div>
 
-<script>
-let curTrack='';
-function genNewTrack(){
-  curTrack='NL-'+Math.floor(100000+Math.random()*900000);
-  document.getElementById('newTrack').innerText='Tracking: '+curTrack;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set, get, child, onValue, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB5WNDPxhjoEYQsoDHoSA3oUxNFvH6-qDk",
+  authDomain: "northline-26dfa.firebaseapp.com",
+  databaseURL: "https://northline-26dfa-default-rtdb.firebaseio.com",
+  projectId: "northline-26dfa",
+  storageBucket: "northline-26dfa.firebasestorage.app",
+  messagingSenderId: "569967073894",
+  appId: "1:569967073894:web:040b34ee22bdcc63426ba7",
+  measurementId: "G-CKQLCT0BF9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let curTrack = '';
+let orders = [];
+
+window.genNewTrack = function() {
+  curTrack = 'NL-' + Math.floor(100000 + Math.random() * 900000);
+  document.getElementById('newTrack').innerText = 'Tracking: ' + curTrack;
 }
-function togglePkg(){
-  let t=document.getElementById('pkgType').value;
-  document.getElementById('petFields').style.display = t=='Pet' ? 'block' : 'none';
-  document.getElementById('goodsFields').style.display = t=='Goods' ? 'block' : 'none';
+
+window.togglePkg = function() {
+  let t = document.getElementById('pkgType').value;
+  document.getElementById('petFields').style.display = t == 'Pet' ? 'block' : 'none';
+  document.getElementById('goodsFields').style.display = t == 'Goods' ? 'block' : 'none';
 }
-function login(){
-  var u=document.getElementById('u').value.trim();
-  var p=document.getElementById('p').value.trim();
-  if(u=='admin' && p=='1234'){
-    document.getElementById('login').style.display='none';
-    document.getElementById('panel').style.display='block';
-    render();
-  } else { alert('Use admin / 1234'); }
-}
-let orders=JSON.parse(localStorage.getItem('nl_orders')||'[]');
-function render(){
-  document.getElementById('list').innerHTML=orders.map((o,i)=>`<div class="order"><b>${o.track||'No Track'} - ${o.cust}</b> (${o.type||''})<br>${o.from} → ${o.to}<br><small>${o.detail||''}</small><br><span style="background:#e8f5e9;padding:3px 8px;border-radius:12px;font-size:12px">${o.st} | ${o.branch||''}</span> <button onclick="del(${i})" style="float:right">Delete</button></div>`).join('')||'No orders yet.';
-}
-function add(){
-  if(!curTrack){alert('Press Generate Tracking Number first!');return}
-  let type=document.getElementById('pkgType').value;
-  let detail='';
-  if(type=='Pet'){
-    detail='🐶 Pet Name: '+document.getElementById('petName').value+' | Breed: '+document.getElementById('petBreed').value+' | Weight: '+document.getElementById('petWeight').value+' | Sex: '+document.getElementById('petSex').value+' | Age: '+document.getElementById('petAge').value+' | Color: '+document.getElementById('petColor').value+' | Vaccination: '+document.getElementById('petVac').value+' | Note: '+document.getElementById('petNote').value;
+
+window.login = async function() {
+  const u = document.getElementById('u').value.trim();
+  const p = document.getElementById('p').value.trim();
+  try {
+    const snap = await get(child(ref(db), `admins/${u}`));
+    if (snap.exists() && snap.val().password === p) {
+      showPanel();
+      return;
+    }
+  } catch(e) {}
+  if (u == 'admin' && p == '1234') {
+    await set(ref(db, 'admins/admin'), { username: "admin", password: "1234" });
+    showPanel();
   } else {
-    detail='📦 Goods: '+document.getElementById('goodsType').value+' | Weight: '+document.getElementById('goodsWeight').value+' | Qty: '+document.getElementById('goodsQty').value+' | Note: '+document.getElementById('goodsNote').value;
+    alert('Wrong username or password');
   }
-  let o={track:curTrack,cust:document.getElementById('cust').value,from:document.getElementById('from').value,to:document.getElementById('to').value,st:document.getElementById('st').value,type:type,detail:detail,branch:document.getElementById('branch').value};
-  if(!o.cust){alert('Enter customer name');return}
-  orders.unshift(o);
-  localStorage.setItem('nl_orders',JSON.stringify(orders));
-  render();
-  alert('Saved! Tracking: '+curTrack+' - Send am to customer');
-  curTrack='';
-  document.getElementById('newTrack').innerText='Tracking: NL-______ (Press Generate)';
 }
-function del(i){orders.splice(i,1);localStorage.setItem('nl_orders',JSON.stringify(orders));render()}
-</script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB5WNDPxhjoEYQsoDHoSA3oUxNFvH6-qDk",
-    authDomain: "northline-26dfa.firebaseapp.com",
-    databaseURL: "https://northline-26dfa-default-rtdb.firebaseio.com",
-    projectId: "northline-26dfa",
-    storageBucket: "northline-26dfa.firebasestorage.app",
-    messagingSenderId: "569967073894",
-    appId: "1:569967073894:web:040b34ee22bdcc63426ba7",
-    measurementId: "G-CKQLCT0BF9"
-  };
+function showPanel() {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('panel').style.display = 'block';
+  loadOrders();
+}
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+function loadOrders() {
+  onValue(ref(db, 'orders'), (snapshot) => {
+    const data = snapshot.val() || {};
+    orders = Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse();
+    render();
+  });
+}
 
-  // TEST: write small data to check if e connect
+function render() {
+  document.getElementById('list').innerHTML = orders.map((o) => `<div class="order"><b>${o.track || 'No Track'} - ${o.cust}</b> (${o.type || ''})<br>${o.from} → ${o.to}<br><small>${o.detail || ''}</small><br><span style="background:#e8f5e9;padding:3px 8px;border-radius:12px;font-size:12px">${o.st} | ${o.branch || ''}</span> <button onclick="delOrder('${o.id}')" style="float:right">Delete</button></div>`).join('') || 'No orders yet.';
+}
+
+window.add = async function() {
+  if (!curTrack) { alert('Press Generate Tracking Number first!'); return; }
+  let type = document.getElementById('pkgType').value;
+  let detail = '';
+  if (type == 'Pet') {
+    detail = 'Pet Name: ' + document.getElementById('petName').value + ' | Breed: ' + document.getElementById('petBreed').value + ' | Weight: ' + document.getElementById('petWeight').value + ' | Sex: ' + document.getElementById('petSex').value + ' | Age: ' + document.getElementById('petAge').value + ' | Color: ' + document.getElementById('petColor').value + ' | Vaccination: ' + document.getElementById('petVac').value + ' | Note: ' + document.getElementById('petNote').value;
+  } else {
+    detail = 'Goods: ' + document.getElementById('goodsType').value + ' | Weight: ' + document.getElementById('goodsWeight').value + ' | Qty: ' + document.getElementById('goodsQty').value + ' | Note: ' + document.getElementById('goodsNote').value;
+  }
+  let o = { track: curTrack, cust: document.getElementById('cust').value, phone: document.getElementById('phone').value, from: document.getElementById('from').value, to: document.getElementById('to').value, st: document.getElementById('st').value, type: type, detail: detail, branch: document.getElementById('branch').value, createdAt: Date.now() };
+  if (!o.cust) { alert('Enter customer name'); return; }
+  await push(ref(db, 'orders'), o);
+  alert('Saved to Firebase! Tracking: ' + curTrack);
+  curTrack = '';
+  document.getElementById('newTrack').innerText = 'Tracking: NL-______ (Press Generate)';
+}
+
+window.delOrder = async function(id) {
+  await set(ref(db, 'orders/' + id), null);
+}
 </script>
 </body>
 </html>
