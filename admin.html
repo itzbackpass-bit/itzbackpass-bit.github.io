@@ -1,6 +1,212 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Northline Admin</title>
-<style>body{font-family:Arial;background:#0A1931;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px}.box{background:#fff;padding:25px;border-radius:14px;width:100%;max-width:380px;text-align:center}h2{color:#0A1931}h2 span{color:#FFC107}input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}.btn{background:#FFC107;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer}#panel{display:none;text-align:left}.order{background:#f6f7f9;padding:12px;border-radius:8px;margin-top:10px}</style></head>
-<body><div class="box">
-<div id="login"><h2>NORTHLINE<span> ✦</span> ADMIN</h2><p style="color:#666">Login to manage orders</p><input id="u" placeholder="Username" value="admin"><input id="p" type="password" placeholder="Password" value="1234"><button class="btn" onclick="login()">Login</button><p style="font-size:12px;color:#888">Username: admin | Password: 1234</p></div>
-<div id="panel"><h3>Welcome Admin 👋</h3><p>Total Orders: <b id="total">12</b></p><div id="list"><div class="order"><b>James K.</b><br>Brooklyn → Manhattan<br><small>In Transit</small></div><div class="order"><b>Maria S.</b><br>Queens → Bronx<br><small>Delivered</small></div><div class="order"><b>David L.</b><br>New York → New Jersey<br><small>Picked Up</small></div></div><button class="btn" onclick="location.reload()">Logout</button><br><br><a href="owner.html">Go to Owner Dashboard →</a></div>
-</div><script>function login(){var u=document.getElementById('u').value.trim();var p=document.getElementById('p').value.trim();if(u=='admin' && p=='1234'){document.getElementById('login').style.display='none';document.getElementById('panel').style.display='block';}else{alert('Use admin / 1234 - I don put am for you already, just press Login');}}</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northline Admin - Create Tracking</title>
+<style>
+body{font-family:Arial;background:#0A1931;padding:20px;margin:0}
+.box{background:#fff;padding:22px;border-radius:14px;max-width:520px;margin:0 auto}
+h2{color:#0A1931;text-align:center}h2 span{color:#FFC107}
+h3{color:#0A1931;margin-top:20px;border-bottom:2px solid #FFC107;padding-bottom:5px}
+input,select,textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+.btn{background:#FFC107;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer}
+.btn-green{background:#25D366;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:bold;width:100%;cursor:pointer}
+#panel{display:none}
+.order{background:#f6f7f9;padding:14px;border-radius:10px;margin-top:12px;border-left:4px solid #FFC107}
+#petFields{display:none;background:#fff8e1;padding:12px;border-radius:10px;border:1px dashed #FFC107}
+#goodsFields{background:#f0f7ff;padding:12px;border-radius:10px}
+.section{background:#f9f9f9;padding:12px;border-radius:10px;margin:10px 0}
+label{font-weight:bold;font-size:13px;color:#333}
+</style>
+</head>
+<body>
+<div class="box">
+
+<div id="login">
+<h2>NORTHLINE<span> ✦</span> ADMIN</h2>
+<p style="text-align:center;color:#666">Nationwide • All Branches • Goods & Pets</p>
+<input id="u" value="admin" placeholder="Username">
+<input id="p" type="password" value="1234" placeholder="Password">
+<button class="btn" onclick="login()">Login</button>
+<p style="font-size:12px;color:#888;text-align:center">Username: admin | Password: 1234</p>
+</div>
+
+<div id="panel">
+<h3>Welcome Admin 👋</h3>
+
+<!-- TRACKING -->
+<div class="section">
+<label>🎫 TRACKING NUMBER</label>
+<button class="btn" onclick="genNewTrack()">Generate Tracking Number</button>
+<p id="newTrack" style="text-align:center;font-weight:bold;font-size:20px;margin:10px 0;color:#0A1931">Tracking: NL-______ (Press Generate)</p>
+<select id="branch">
+<option>New York Branch</option>
+<option>New Jersey Branch</option>
+<option>California Branch</option>
+<option>Texas Branch</option>
+<option>Florida Branch</option>
+<option>Illinois Branch</option>
+<option>Georgia Branch</option>
+<option>Other State</option>
+</select>
+</div>
+
+<!-- SENDER -->
+<div class="section">
+<h3>👤 SENDER INFO</h3>
+<input id="senderName" placeholder="Sender Full Name *">
+<input id="senderPhone" placeholder="Sender Phone Number *">
+<input id="senderEmail" placeholder="Sender Email">
+<input id="senderAddress" placeholder="Sender Full Address *">
+</div>
+
+<!-- RECEIVER -->
+<div class="section">
+<h3>📦 RECEIVER INFO</h3>
+<input id="cust" placeholder="Receiver Full Name *">
+<input id="phone" placeholder="Receiver Phone Number *">
+<input id="receiverEmail" placeholder="Receiver Email">
+<input id="to" placeholder="Receiver Delivery Address *">
+<input id="from" placeholder="Pickup Address *">
+</div>
+
+<!-- PACKAGE TYPE -->
+<div class="section">
+<h3>📦 PACKAGE TYPE - Admin Select</h3>
+<select id="pkgType" onchange="togglePkg()">
+<option value="Goods">📦 Goods / Parcel</option>
+<option value="Pet">🐶 Pet Delivery</option>
+</select>
+
+<div id="goodsFields">
+<label>📦 GOODS DETAILS:</label>
+<input id="goodsType" placeholder="Goods Type - e.g. Electronics, Clothes, Food, Documents">
+<input id="goodsWeight" placeholder="Goods Weight - e.g. 5kg">
+<input id="goodsQty" placeholder="Quantity - e.g. 2 boxes">
+<input id="goodsValue" placeholder="Declared Value - e.g. $200">
+<textarea id="goodsNote" placeholder="Goods Description / Fragile / Handle with Care / Other Note..."></textarea>
+</div>
+
+<div id="petFields">
+<label>🐾 PET DETAILS:</label>
+<input id="petName" placeholder="Pet Name - e.g. Max *">
+<input id="petBreed" placeholder="Breed - e.g. German Shepherd / Persian Cat *">
+<input id="petWeight" placeholder="Pet Weight - e.g. 12kg *">
+<select id="petSex"><option>Male</option><option>Female</option></select>
+<input id="petAge" placeholder="Pet Age - e.g. 2 years">
+<input id="petColor" placeholder="Color / Markings - e.g. Brown & Black">
+<input id="petVac" placeholder="Vaccination Status - e.g. Vaccinated / Not Vaccinated">
+<textarea id="petNote" placeholder="Special Care / Food / Medicine / Vet Note / Other..."></textarea>
+</div>
+</div>
+
+<!-- DELIVERY + ETA -->
+<div class="section">
+<h3>🚚 DELIVERY & ETA</h3>
+<select id="service">
+<option>Standard - $12 (2-3 Days)</option>
+<option>Express - $25 (1-2 hrs)</option>
+<option>Same-Day - $18</option>
+<option>Inter-State - $45 (2-4 Days)</option>
+<option>Pet Transport - $60 (Pet-Safe Van + Care)</option>
+</select>
+<label>📅 Pickup Date:</label>
+<input id="pickupDate" type="date">
+<label>⏰ Estimated Delivery (ETA):</label>
+<input id="eta" type="date">
+<input id="etaTime" placeholder="ETA Time - e.g. 2:00 PM">
+<select id="st">
+<option>Order Created</option>
+<option>Picked Up</option>
+<option>In Transit</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+<textarea id="adminNote" placeholder="Admin Note / Instruction for Driver..."></textarea>
+</div>
+
+<button class="btn-green" onclick="add()">✅ Save Order with Tracking</button>
+<p id="saveMsg" style="text-align:center;color:green;font-weight:bold"></p>
+
+<h3>All Orders (All Branches)</h3>
+<div id="list"></div>
+<br>
+<button class="btn" onclick="location.reload()">Logout</button>
+<br><br>
+<a href="owner.html">Go to Owner Dashboard →</a> | <a href="index.html">View Homepage →</a>
+</div>
+</div>
+
+<script>
+let curTrack='';
+function genNewTrack(){
+  curTrack='NL-'+Math.floor(100000+Math.random()*900000);
+  document.getElementById('newTrack').innerText='Tracking: '+curTrack;
+}
+function togglePkg(){
+  let t=document.getElementById('pkgType').value;
+  document.getElementById('petFields').style.display = t=='Pet' ? 'block' : 'none';
+  document.getElementById('goodsFields').style.display = t=='Goods' ? 'block' : 'none';
+}
+function login(){
+  var u=document.getElementById('u').value.trim();
+  var p=document.getElementById('p').value.trim();
+  if(u=='admin' && p=='1234'){
+    document.getElementById('login').style.display='none';
+    document.getElementById('panel').style.display='block';
+    render();
+  } else { alert('Use admin / 1234'); }
+}
+let orders=JSON.parse(localStorage.getItem('nl_orders')||'[]');
+function render(){
+  document.getElementById('list').innerHTML=orders.map((o,i)=>`<div class="order"><b>${o.track||'No Track'} - ${o.type||''}</b><br><b>Sender:</b> ${o.senderName} | ${o.senderPhone} | ${o.senderEmail||''}<br><b>Receiver:</b> ${o.cust} | ${o.phone} | ${o.receiverEmail||''}<br><b>From:</b> ${o.from}<br><b>To:</b> ${o.to}<br><small>${o.detail||''}</small><br><b>ETA:</b> ${o.eta||''} ${o.etaTime||''} | <b>Service:</b> ${o.service||''}<br><span style="background:#e8f5e9;padding:3px 8px;border-radius:12px;font-size:12px">${o.st} | ${o.branch||''}</span><br><button onclick="shareOrder(${i})" style="margin-top:8px;background:#25D366;color:#fff;border:none;padding:8px 12px;border-radius:6px">Share Tracking to Customer</button> <button onclick="del(${i})" style="margin-top:8px">Delete</button></div>`).join('')||'No orders yet.';
+}
+function add(){
+  if(!curTrack){alert('Press Generate Tracking Number first!');return}
+  let type=document.getElementById('pkgType').value;
+  let detail='';
+  if(type=='Pet'){
+    detail='🐶 Pet Name: '+document.getElementById('petName').value+' | Breed: '+document.getElementById('petBreed').value+' | Weight: '+document.getElementById('petWeight').value+' | Sex: '+document.getElementById('petSex').value+' | Age: '+document.getElementById('petAge').value+' | Color: '+document.getElementById('petColor').value+' | Vaccination: '+document.getElementById('petVac').value+' | Note: '+document.getElementById('petNote').value;
+  } else {
+    detail='📦 Goods: '+document.getElementById('goodsType').value+' | Weight: '+document.getElementById('goodsWeight').value+' | Qty: '+document.getElementById('goodsQty').value+' | Value: '+document.getElementById('goodsValue').value+' | Note: '+document.getElementById('goodsNote').value;
+  }
+  let o={
+    track:curTrack,
+    senderName:document.getElementById('senderName').value,
+    senderPhone:document.getElementById('senderPhone').value,
+    senderEmail:document.getElementById('senderEmail').value,
+    senderAddress:document.getElementById('senderAddress').value,
+    cust:document.getElementById('cust').value,
+    phone:document.getElementById('phone').value,
+    receiverEmail:document.getElementById('receiverEmail').value,
+    from:document.getElementById('from').value,
+    to:document.getElementById('to').value,
+    st:document.getElementById('st').value,
+    type:type,
+    detail:detail,
+    branch:document.getElementById('branch').value,
+    service:document.getElementById('service').value,
+    pickupDate:document.getElementById('pickupDate').value,
+    eta:document.getElementById('eta').value,
+    etaTime:document.getElementById('etaTime').value,
+    adminNote:document.getElementById('adminNote').value
+  };
+  if(!o.cust || !o.phone || !o.to){alert('Fill Receiver Name, Phone, Delivery Address');return}
+  orders.unshift(o);
+  localStorage.setItem('nl_orders',JSON.stringify(orders));
+  render();
+  document.getElementById('saveMsg').innerText='✅ Saved! Tracking: '+curTrack+' | ETA: '+o.eta+' '+o.etaTime;
+  alert('Saved! Tracking: '+curTrack+'\nReceiver: '+o.cust+'\nETA: '+o.eta+' '+o.etaTime+'\nSend am to customer');
+  curTrack='';
+  document.getElementById('newTrack').innerText='Tracking: NL-______ (Press Generate)';
+}
+function shareOrder(i){
+  let o=orders[i];
+  let msg='Hello '+o.cust+', your Northline Tracking: '+o.track+'\nType: '+o.type+'\nFrom: '+o.from+'\nTo: '+o.to+'\nETA: '+o.eta+' '+o.etaTime+'\nStatus: '+o.st+'\nTrack am for: https://itzbackpass-bit.github.io/';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+function del(i){orders.splice(i,1);localStorage.setItem('nl_orders',JSON.stringify(orders));render()}
+</script>
+</body>
+</html>
