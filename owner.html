@@ -1,215 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NORTHLINE - Owner Dashboard</title>
+<title>Northline - Admin</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#F2F4F7;padding:0}
-header{background:#0A1931;color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
-header b{font-size:22px}
-header b span{color:#FFC107}
-header small{display:block;font-size:11px;opacity:.7}
-.wrap{max-width:900px;margin:0 auto;padding:15px}
-.top-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.card{background:#fff;padding:18px;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.card small{color:#666;font-size:12px}
-.num{font-size:28px;font-weight:900;color:#0A1931}
-.green{color:#0A9D3A}.blue{color:#0A6CFF}.orange{color:#FF6D00}.purple{color:#7B2FF7}
-input,select{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:10px}
-.btn{background:#0A1931;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:bold;width:100%;cursor:pointer}
-.btn-yellow{background:#FFC107;border:none;padding:12px;border-radius:10px;font-weight:bold;width:100%;cursor:pointer}
-.order{background:#fff;padding:16px;border-radius:14px;margin-top:12px;box-shadow:0 4px 12px rgba(0,0,0,.05);border-left:5px solid #FFC107}
-.order.pet{border-left-color:#FF6D00}
-.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#e8f5e9}
-.badge-delivered{background:#D1FADF}.badge-transit{background:#FFE8CC}.badge-picked{background:#D6E4FF}
-.tag{font-size:11px;background:#0A1931;color:#fff;padding:3px 8px;border-radius:10px}
-.flex{display:flex;gap:8px}
-.flex button{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd;background:#fff;font-weight:bold;cursor:pointer}
-#loginBox{max-width:420px;margin:40px auto;background:#fff;padding:25px;border-radius:16px;text-align:center}
-#panel{display:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f4f6f8}
+.header{background:#0a1a2f;color:white;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:20px;font-weight:800}.logo span{color:#ffcc00}
+.box{background:white;max-width:600px;margin:25px auto;padding:22px;border-radius:14px;box-shadow:0 10px 25px rgba(0,0,0,.1)}
+h2{margin-bottom:14px}
+input,select,textarea{width:100%;padding:12px;border:2px solid #ddd;border-radius:10px;margin-bottom:12px;font-size:15px}
+button{width:100%;padding:14px;background:#0a1a2f;color:white;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer}
+button.yellow{background:#ffcc00;color:#111}
+label{font-size:13px;font-weight:700;color:#555;display:block;margin-bottom:5px}
+.item{background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:10px;margin-bottom:10px;font-size:14px}
+.hidden{display:none}
+.top-link{color:white;text-decoration:none;font-size:13px}
 </style>
 </head>
 <body>
-
-<header>
-<div><b>NORTHLINE<span> ✦</span></b><small>OWNER DASHBOARD • NATIONWIDE</small></div>
-<div style="text-align:right"><small>All Branches</small><b>CEO View</b></div>
-</header>
-
-<div id="loginBox">
-<h2 style="color:#0A1931">NORTHLINE<span style="color:#FFC107"> ✦</span> OWNER</h2>
-<p style="color:#666;font-size:13px;margin:8px 0">Private - Owner Only</p>
-<input id="u" value="owner" placeholder="Username">
-<input id="p" type="password" value="owner123" placeholder="Password">
-<button class="btn-yellow" onclick="login()">Login as Owner</button>
-<p style="font-size:12px;color:#888;margin-top:8px">Username: owner | Password: owner123</p>
+<div class="header"><div class="logo">NORTH<span>LINE</span> ADMIN</div><a class="top-link" href="index.html">View Site →</a></div>
+<div class="box" id="loginBox">
+<h2>Admin Login</h2>
+<label>Username</label><input id="u" placeholder="Username">
+<label>Password</label><input id="p" type="password" placeholder="Password">
+<button onclick="login()">LOGIN</button>
 </div>
-
-<div id="panel" class="wrap">
-
-<!-- TOP STATS -->
-<div class="top-grid">
-<div class="card"><small>Total Orders</small><div class="num" id="statTotal">0</div><small>All Branches</small></div>
-<div class="card"><small>Goods Orders</small><div class="num blue" id="statGoods">0</div><small>📦 Parcels</small></div>
-<div class="card"><small>Pet Orders</small><div class="num orange" id="statPets">0</div><small>🐶🐱 Pet Safe</small></div>
-<div class="card"><small>Delivered</small><div class="num green" id="statDelivered">0</div><small>✅ Completed</small></div>
-<div class="card"><small>Estimated Revenue</small><div class="num purple" id="statRevenue">$0</div><small>From Services</small></div>
+<div class="box hidden" id="dashBox">
+<h2>Create New Shipment</h2>
+<label>Tracking Number</label><input id="track" placeholder="e.g. NL123456" style="text-transform:uppercase">
+<label>Sender Name</label><input id="sender" placeholder="Sender name">
+<label>Receiver Name</label><input id="receiver" placeholder="Receiver name">
+<label>From / To</label><input id="route" placeholder="e.g. Pago Pago to Apia">
+<label>Status</label><select id="status"><option>Order Received</option><option>Picked Up</option><option>In Transit</option><option>Out for Delivery</option><option>Delivered</option></select>
+<label>Current Location / Note</label><textarea id="location" placeholder="e.g. Package at Northline Hub"></textarea>
+<button class="yellow" onclick="saveShipment()">CREATE / UPDATE SHIPMENT →</button>
+<button onclick="logout()" style="background:#e2e8f0;color:#111;margin-top:10px">Logout</button>
+<h2 style="margin-top:25px">All Shipments</h2>
+<div id="list">Loading...</div>
 </div>
-
-<!-- CONTROLS -->
-<div class="card" style="margin-top:15px">
-<h3>🔍 Search & Filter Orders</h3>
-<input id="search" placeholder="Search Tracking, Sender, Receiver, Phone, Email..." oninput="render()">
-<div class="flex">
-<select id="filterBranch" onchange="render()">
-<option value="">All Branches</option>
-<option>New York Branch</option>
-<option>New Jersey Branch</option>
-<option>California Branch</option>
-<option>Texas Branch</option>
-<option>Florida Branch</option>
-<option>Illinois Branch</option>
-<option>Georgia Branch</option>
-<option>Other State</option>
-</select>
-<select id="filterType" onchange="render()">
-<option value="">All Types</option>
-<option value="Goods">📦 Goods Only</option>
-<option value="Pet">🐶 Pet Only</option>
-</select>
-<select id="filterStatus" onchange="render()">
-<option value="">All Status</option>
-<option>Order Created</option>
-<option>Picked Up</option>
-<option>In Transit</option>
-<option>Out for Delivery</option>
-<option>Delivered</option>
-</select>
-</div>
-<button class="btn" onclick="location.href='admin.html'">+ Create New Order in Admin →</button>
-</div>
-
-<!-- BRANCH BREAKDOWN -->
-<div class="card" style="margin-top:15px">
-<h3>🏢 Branch Performance</h3>
-<div id="branchList" style="font-size:14px;line-height:1.8"></div>
-</div>
-
-<!-- ORDERS -->
-<h3 style="margin:18px 0 5px">📋 All Orders - Full Details</h3>
-<div id="list"></div>
-
-<div class="card" style="margin-top:20px;text-align:center">
-<b>NORTHLINE ✦</b><br>
-<a href="index.html">View Homepage</a> | <a href="admin.html">Admin Panel</a><br><br>
-<button class="btn-yellow" onclick="location.reload()">Logout Owner</button>
-</div>
-
-</div>
-
 <script>
-let orders=JSON.parse(localStorage.getItem('nl_orders')||'[]');
-
+const API = "https://api.npoint.io/86e424f67e26c73cb9c6";
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "Northline2026!";
 function login(){
-  let u=document.getElementById('u').value.trim();
-  let p=document.getElementById('p').value.trim();
-  if(u=='owner' && p=='owner123'){
-    document.getElementById('loginBox').style.display='none';
-    document.getElementById('panel').style.display='block';
-    render();
-  } else { alert('Use owner / owner123'); }
+  if(document.getElementById('u').value===ADMIN_USER && document.getElementById('p').value===ADMIN_PASS){
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('dashBox').classList.remove('hidden');
+    showList();
+  } else alert('Wrong username or password');
 }
-
-function getPrice(service){
-  if(!service) return 0;
-  if(service.includes('$25')) return 25;
-  if(service.includes('$18')) return 18;
-  if(service.includes('$45')) return 45;
-  if(service.includes('$60')) return 60;
-  return 12;
+function logout(){ location.reload(); }
+async function getData(){
+  try{ let r=await fetch(API); let j=await r.json(); return j.shipments||{}; }catch(e){ return {}; }
 }
-
-function render(){
-  let q=(document.getElementById('search').value||'').toLowerCase();
-  let fb=document.getElementById('filterBranch').value;
-  let ft=document.getElementById('filterType').value;
-  let fs=document.getElementById('filterStatus').value;
-
-  let filtered=orders.filter(o=>{
-    let text=JSON.stringify(o).toLowerCase();
-    if(q && !text.includes(q)) return false;
-    if(fb && o.branch!==fb) return false;
-    if(ft && o.type!==ft) return false;
-    if(fs && o.st!==fs) return false;
-    return true;
-  });
-
-  // Stats - from ALL orders, not filtered
-  let total=orders.length;
-  let goods=orders.filter(o=>o.type=='Goods').length;
-  let pets=orders.filter(o=>o.type=='Pet').length;
-  let delivered=orders.filter(o=>o.st=='Delivered').length;
-  let revenue=orders.reduce((s,o)=>s+getPrice(o.service),0);
-
-  document.getElementById('statTotal').innerText=total;
-  document.getElementById('statGoods').innerText=goods;
-  document.getElementById('statPets').innerText=pets;
-  document.getElementById('statDelivered').innerText=delivered;
-  document.getElementById('statRevenue').innerText='$'+revenue;
-
-  // Branch breakdown
-  let branches={};
-  orders.forEach(o=>{ branches[o.branch||'Unknown']=(branches[o.branch||'Unknown']||0)+1; });
-  document.getElementById('branchList').innerHTML=Object.keys(branches).map(b=>`• <b>${b}</b>: ${branches[b]} orders`).join('<br>') || 'No orders yet.';
-
-  // List
-  if(filtered.length==0){
-    document.getElementById('list').innerHTML='<div class="card" style="text-align:center;color:#666">No orders found. Go to Admin to create one.</div>';
-    return;
-  }
-
-  document.getElementById('list').innerHTML=filtered.map((o)=>{
-    let idx=orders.indexOf(o);
-    let badgeClass=o.st=='Delivered' ? 'badge-delivered' : (o.st=='In Transit' ? 'badge-transit' : 'badge-picked');
-    return `<div class="order ${o.type=='Pet'?'pet':''}">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <b style="font-size:18px">${o.track||'No Track'}</b>
-        <span class="tag">${o.type||''} • ${o.branch||''}</span>
-      </div>
-      <div style="margin:10px 0;line-height:1.7;font-size:14px">
-        <b>👤 SENDER:</b> ${o.senderName||'-'} | 📞 ${o.senderPhone||'-'} | 📧 ${o.senderEmail||'-'}<br>
-        <b>📍 Sender Address:</b> ${o.senderAddress||o.from||'-'}<br>
-        <b>📦 RECEIVER:</b> ${o.cust||'-'} | 📞 ${o.phone||'-'} | 📧 ${o.receiverEmail||'-'}<br>
-        <b>📍 Pickup:</b> ${o.from||'-'}<br>
-        <b>📍 Delivery:</b> ${o.to||'-'}<br>
-        <b>📦 DETAILS:</b> ${o.detail||'-'}<br>
-        <b>🚚 Service:</b> ${o.service||'-'} | <b>📅 Pickup Date:</b> ${o.pickupDate||'-'}<br>
-        <b>⏰ ETA:</b> <span style="color:#FF6D00;font-weight:bold">${o.eta||'-'} ${o.etaTime||''}</span><br>
-        <b>📝 Admin Note:</b> ${o.adminNote||'-'}
-      </div>
-      <span class="badge ${badgeClass}">${o.st||''}</span>
-      <div class="flex" style="margin-top:12px">
-        <button onclick="changeStatus(${idx})">🔄 Change Status</button>
-        <button onclick="shareOrder(${idx})" style="background:#25D366;color:#fff;border:none">💬 Share to Customer</button>
-        <button onclick="del(${idx})" style="color:red">🗑 Delete</button>
-      </div>
-    </div>`;
-  }).join('');
+async function saveData(shipments){
+  await fetch(API, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({shipments: shipments})});
 }
-
-function changeStatus(i){
-  let newSt=prompt('Enter New Status:\nOrder Created, Picked Up, In Transit, Out for Delivery, Delivered', orders[i].st);
-  if(newSt){ orders[i].st=newSt; localStorage.setItem('nl_orders',JSON.stringify(orders)); render(); }
+async function saveShipment(){
+  var t=document.getElementById('track').value.trim().toUpperCase();
+  if(!t){ alert('Enter tracking number'); return; }
+  let data=await getData();
+  data[t]={sender:document.getElementById('sender').value, receiver:document.getElementById('receiver').value, route:document.getElementById('route').value, status:document.getElementById('status').value, location:document.getElementById('location').value, updated:new Date().toLocaleString()};
+  await saveData(data);
+  alert('Saved ONLINE! Customer can now track: '+t);
+  showList();
 }
-function shareOrder(i){
-  let o=orders[i];
-  let msg='Hello '+o.cust+', your Northline Tracking: '+o.track+'\nType: '+o.type+'\nFrom: '+o.from+'\nTo: '+o.to+'\nETA: '+o.eta+' '+o.etaTime+'\nStatus: '+o.st+'\nSender: '+o.senderName+'\nTrack: https://itzbackpass-bit.github.io/';
-  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+async function showList(){
+  let data=await getData();
+  let html=''; let keys=Object.keys(data);
+  if(keys.length===0) html='<p style="color:#888">No shipments yet.</p>';
+  keys.forEach(function(k){ let s=data[k]; html+='<div class="item"><b>'+k+'</b> - '+s.status+'<br>'+s.sender+' → '+s.receiver+'<br>'+s.route+'<br><small>'+s.location+' | '+s.updated+'</small><br><button onclick="delShip(\''+k+'\')" style="padding:6px;margin-top:8px;background:#fee2e2;color:#991b1b;font-size:13px">Delete</button></div>'; });
+  document.getElementById('list').innerHTML=html;
 }
-function del(i){
-  if(confirm('Delete this order?')){ orders.splice(i,1); localStorage.setItem('nl_orders',JSON.stringify(orders)); render(); }
+async function delShip(k){
+  if(!confirm('Delete '+k+'?')) return;
+  let data=await getData(); delete data[k]; await saveData(data); showList();
 }
 </script>
 </body>
