@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track - Northline</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f4f6f8}
+.header{background:#0a1a2f;color:white;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:20px;font-weight:800}.logo span{color:#ffcc00}
+.box{background:white;max-width:520px;margin:25px auto;padding:22px;border-radius:14px;box-shadow:0 10px 25px rgba(0,0,0,.1)}
+input{width:100%;padding:14px;border:2px solid #ddd;border-radius:10px;margin-bottom:12px;font-size:16px;text-transform:uppercase}
+button{width:100%;padding:14px;background:#ffcc00;border:none;border-radius:10px;font-size:16px;font-weight:800;cursor:pointer}
+.result{margin-top:18px;background:#f8fafc;border:1px solid #e2e8f0;padding:16px;border-radius:10px}
+.status{font-size:20px;font-weight:800;color:#0a1a2f;margin:8px 0}
+a{color:white;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="header"><div class="logo">NORTH<span>LINE</span></div><a href="index.html">Home</a></div>
+<div class="box">
+<h2>Track Your Package</h2>
+<input id="trackNum" placeholder="Enter Tracking Number">
+<button onclick="doTrack()">TRACK NOW →</button>
+<div id="result"></div>
+</div>
+<script>
+const API = "https://api.npoint.io/86e424f67e26c73cb9c6";
+async function doTrack(){
+  let num=document.getElementById('trackNum').value.trim().toUpperCase();
+  if(!num){ alert('Enter tracking number'); return; }
+  document.getElementById('result').innerHTML='<p>Searching...</p>';
+  try{
+    let r=await fetch(API);
+    let j=await r.json();
+    let s=(j.shipments||{})[num];
+    if(!s){ document.getElementById('result').innerHTML='<div class="result"><b>Not Found</b><p>No shipment found for '+num+'. Check number or contact Northline.</p></div>'; return; }
+    document.getElementById('result').innerHTML='<div class="result"><b>Tracking: '+num+'</b><div class="status">'+s.status+'</div><p><b>From / To:</b> '+s.route+'</p><p><b>Sender:</b> '+s.sender+'</p><p><b>Receiver:</b> '+s.receiver+'</p><p><b>Location:</b> '+s.location+'</p><p><small>Last updated: '+s.updated+'</small></p></div>';
+  }catch(e){ document.getElementById('result').innerHTML='<p>Error loading. Try again.</p>'; }
+}
+let params=new URLSearchParams(location.search);
+if(params.get('track')){ document.getElementById('trackNum').value=params.get('track'); doTrack(); }
+document.getElementById('trackNum').addEventListener('keypress',function(e){ if(e.key==='Enter') doTrack(); });
+</script>
+</body>
+</html>
